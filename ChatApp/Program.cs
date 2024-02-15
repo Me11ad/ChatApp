@@ -3,10 +3,10 @@ using System.Net.Sockets;
 
 ServerObject server = new ServerObject(); // создасться сервер
 await server.ListenAsync(); // запуск сервера
-
 class ServerObject
 {
     TcpListener tcpListener = new TcpListener(IPAddress.Any, 8888); // адрес сервера
+    
     List<ClientObject> clients = new List<ClientObject>(); // показывает все подключения
     protected internal void RemoveConnection(string id)
     {
@@ -101,6 +101,7 @@ class ClientObject
                     message = await Reader.ReadLineAsync();
                     if (message == null) continue;
                     message = $"{userName}: {message}";
+                    Console.WriteLine(message);
                     await server.BroadcastMessage(message, Id);
                 }
                 catch
